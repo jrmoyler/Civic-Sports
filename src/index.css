@@ -262,6 +262,14 @@ body {
 .section-cream { background-color: #faf8f4; }
 
 /* ── READABILITY OVERRIDES ─────────────────────────────────────────────────── */
+
+/* Never allow white text to render on white surfaces. */
+.bg-white .text-white,
+.section-white .text-white,
+.card .text-white {
+  color: #0f1520;
+}
+
 /* Lift contrast for muted ink text when used on dark surfaces. */
 .hero-bg .text-ink-300,
 .hero-bg .text-ink-400,
