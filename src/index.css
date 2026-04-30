@@ -39,8 +39,8 @@
   --color-cream-300: #e8e2d6;
 
   /* Typography */
-  --font-display: "Cormorant Garamond", serif;
-  --font-body: "DM Sans", sans-serif;
+  --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-body: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 /* ── BASE RESET ─────────────────────────────────────────────────────────────── */
@@ -55,6 +55,8 @@ html {
 body {
   margin: 0;
   font-family: var(--font-body);
+  line-height: 1.6;
+  font-size: 16px;
   background-color: var(--color-cream-100);
   color: var(--color-ink-700);
   -webkit-font-smoothing: antialiased;
@@ -258,6 +260,42 @@ body {
     radial-gradient(circle at 80% 20%, rgba(77, 122, 102, 0.06) 0%, transparent 40%);
 }
 .section-cream { background-color: #faf8f4; }
+
+/* ── READABILITY OVERRIDES ─────────────────────────────────────────────────── */
+
+/* Never allow white text to render on white surfaces. */
+.bg-white .text-white,
+.section-white .text-white,
+.card .text-white {
+  color: #0f1520;
+}
+
+/* Lift contrast for muted ink text when used on dark surfaces. */
+.hero-bg .text-ink-300,
+.hero-bg .text-ink-400,
+.hero-bg .text-ink-500,
+.bg-ink-900 .text-ink-300,
+.bg-ink-900 .text-ink-400,
+.bg-ink-900 .text-ink-500,
+.bg-ink-950 .text-ink-300,
+.bg-ink-950 .text-ink-400,
+.bg-ink-950 .text-ink-500,
+[class*="bg-ink-"] .text-ink-300,
+[class*="bg-ink-"] .text-ink-400,
+[class*="bg-ink-"] .text-ink-500 {
+  color: #d8e2ea;
+}
+
+/* Improve readability for tiny metadata text. */
+.text-xs.text-ink-400,
+.text-sm.text-ink-400 {
+  color: #5f7388;
+}
+
+[class*="bg-ink-"] .text-xs.text-ink-400,
+[class*="bg-ink-"] .text-sm.text-ink-400 {
+  color: #c2d0dc;
+}
 .section-white { background-color: #ffffff; }
 .section-dark  { background-color: #0f1520; }
 
