@@ -174,7 +174,7 @@ const Navbar = () => {
         {/* Desktop nav */}
         <nav aria-label="Main navigation" className="hidden md:flex items-center gap-7">
           {links.map((l) => (
-            <button
+            <button type="button"
               key={l.id}
               onClick={() => navigate(l.id)}
               aria-current={page === l.id ? 'page' : undefined}
@@ -195,7 +195,7 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-3">
           {auth ? (
             <>
-              <button
+              <button type="button"
                 onClick={() => navigate('dashboard')}
                 className={`text-sm font-medium flex items-center gap-1.5 transition-colors ${
                   isDark && !scrolled ? 'text-ink-300 hover:text-white' : 'text-ink-600 hover:text-ink-900'
@@ -203,13 +203,13 @@ const Navbar = () => {
               >
                 <Ic.User /> Dashboard
               </button>
-              <button onClick={logout} className="btn-outline-ink text-sm font-semibold py-2 px-5 rounded-full">
+              <button type="button" onClick={logout} className="btn-outline-ink text-sm font-semibold py-2 px-5 rounded-full">
                 Log out
               </button>
             </>
           ) : (
             <>
-              <button
+              <button type="button"
                 onClick={() => navigate('login')}
                 className={`text-sm font-medium transition-colors ${
                   isDark && !scrolled ? 'text-ink-300 hover:text-white' : 'text-ink-600 hover:text-ink-900'
@@ -217,7 +217,7 @@ const Navbar = () => {
               >
                 Client Login
               </button>
-              <button onClick={() => navigate('intake')} className="btn-gold text-sm py-2.5 px-6 rounded-full shadow-lg">
+              <button type="button" onClick={() => navigate('intake')} className="btn-gold text-sm py-2.5 px-6 rounded-full shadow-lg">
                 Get Started
               </button>
             </>
@@ -225,7 +225,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile menu toggle */}
-        <button
+        <button type="button"
           className={`md:hidden p-1.5 ${isDark && !scrolled ? 'text-white' : 'text-ink-900'}`}
           onClick={() => setMobileMenu(!mobileMenu)}
           aria-expanded={mobileMenu}
@@ -245,7 +245,7 @@ const Navbar = () => {
         >
           <div className="px-6 py-5 flex flex-col gap-1">
             {links.map((l) => (
-              <button
+              <button type="button"
                 key={l.id}
                 onClick={() => navigate(l.id)}
                 aria-current={page === l.id ? 'page' : undefined}
@@ -258,15 +258,15 @@ const Navbar = () => {
             ))}
             <div className="border-t border-cream-300 pt-4 mt-2 flex flex-col gap-2">
               {auth ? (
-                <button onClick={() => navigate('dashboard')} className="btn-ink py-3 rounded-xl font-semibold flex justify-center items-center gap-2">
+                <button type="button" onClick={() => navigate('dashboard')} className="btn-ink py-3 rounded-xl font-semibold flex justify-center items-center gap-2">
                   <Ic.Dashboard /> Go to Dashboard
                 </button>
               ) : (
                 <>
-                  <button onClick={() => navigate('login')} className="btn-outline-ink py-3 rounded-xl font-medium text-center">
+                  <button type="button" onClick={() => navigate('login')} className="btn-outline-ink py-3 rounded-xl font-medium text-center">
                     Client Login
                   </button>
-                  <button onClick={() => navigate('intake')} className="btn-gold py-3 rounded-xl font-semibold text-center">
+                  <button type="button" onClick={() => navigate('intake')} className="btn-gold py-3 rounded-xl font-semibold text-center">
                     Get Started
                   </button>
                 </>
@@ -318,7 +318,7 @@ const Footer = () => {
             <ul className="space-y-3 text-ink-400 text-sm">
               {companyLinks.map(([n, id]) => (
                 <li key={id}>
-                  <button onClick={() => navigate(id)} className="hover:text-gold-400 transition-colors text-left">
+                  <button type="button" onClick={() => navigate(id)} className="hover:text-gold-400 transition-colors text-left">
                     {n}
                   </button>
                 </li>
@@ -398,13 +398,13 @@ const Home = () => {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <button
+                <button type="button"
                   onClick={() => navigate('intake')}
                   className="btn-gold py-4 px-9 rounded-full text-base font-semibold flex items-center justify-center gap-2 shadow-xl"
                 >
                   Get Your Athlete Assessed <Ic.ArrowRight />
                 </button>
-                <button
+                <button type="button"
                   onClick={() => navigate('services')}
                   className="btn-ghost py-4 px-9 rounded-full text-base font-semibold flex items-center justify-center"
                 >
@@ -540,7 +540,7 @@ const Home = () => {
               <p className="text-ink-500 leading-relaxed mb-8 max-w-xl mx-auto">
                 We are selectively onboarding our first cohort of athletes and families. Every submission is personally reviewed. If we are a fit, you will hear from us within 48 hours.
               </p>
-              <button onClick={() => navigate('intake')} className="btn-gold py-3.5 px-8 rounded-full font-semibold inline-flex items-center gap-2">
+              <button type="button" onClick={() => navigate('intake')} className="btn-gold py-3.5 px-8 rounded-full font-semibold inline-flex items-center gap-2">
                 Submit Your Intake <Ic.ArrowRight />
               </button>
             </AnimSect>
@@ -563,7 +563,7 @@ const Home = () => {
             <p className="text-ink-300 text-xl mb-10 max-w-xl mx-auto leading-relaxed font-light">
               Every submission is personally reviewed. If we are a fit, you will hear from us within 48 hours to discuss next steps.
             </p>
-            <button
+            <button type="button"
               onClick={() => navigate('intake')}
               className="btn-gold py-4 px-10 rounded-full text-base font-semibold inline-flex items-center gap-2 shadow-xl"
             >
@@ -692,7 +692,7 @@ const Services = () => {
                   ))}
                 </ul>
 
-                <button
+                <button type="button"
                   onClick={() => navigate('intake')}
                   className={`w-full py-3.5 rounded-xl font-semibold transition-all ${
                     plan.highlight
@@ -717,7 +717,7 @@ const Services = () => {
                 <p className="text-ink-400 text-sm mb-4">
                   High-touch representation, NIL negotiation, and 24/7 strategic advisory for top-tier prospects. Inquiry only — not every athlete qualifies.
                 </p>
-                <button onClick={() => navigate('contact')} className="btn-gold py-2.5 px-6 rounded-full text-sm font-semibold inline-flex items-center gap-2">
+                <button type="button" onClick={() => navigate('contact')} className="btn-gold py-2.5 px-6 rounded-full text-sm font-semibold inline-flex items-center gap-2">
                   Inquire <Ic.ArrowRight />
                 </button>
               </div>
@@ -801,7 +801,7 @@ const About = () => {
               ))}
             </dl>
 
-            <button onClick={() => navigate('intake')} className="btn-ink mt-10 py-3.5 px-8 rounded-full font-semibold inline-flex items-center gap-2">
+            <button type="button" onClick={() => navigate('intake')} className="btn-ink mt-10 py-3.5 px-8 rounded-full font-semibold inline-flex items-center gap-2">
               Get Your Athlete Assessed <Ic.ArrowRight />
             </button>
           </AnimSect>
@@ -897,7 +897,7 @@ const FAQ = () => {
         <div className="space-y-3" role="list">
           {faqs.map((f, i) => (
             <AnimSect key={i} delay={i * 60} className={`card overflow-hidden ${open === i ? 'border-gold-300' : ''}`} role="listitem">
-              <button
+              <button type="button"
                 className="w-full flex items-center justify-between p-7 text-left"
                 onClick={() => setOpen(open === i ? -1 : i)}
                 aria-expanded={open === i}
@@ -1143,7 +1143,7 @@ const Login = () => {
 
         <p className="text-center text-sm text-ink-500 mt-6">
           Not a member yet?{' '}
-          <button onClick={() => navigate('intake')} className="text-gold-600 font-medium hover:underline">
+          <button type="button" onClick={() => navigate('intake')} className="text-gold-600 font-medium hover:underline">
             Start an intake
           </button>
         </p>
@@ -1154,7 +1154,7 @@ const Login = () => {
 
 // ── DASHBOARD SIDEBAR ITEM (hoisted to module scope to avoid re-create on render) ──
 const SideItem = ({ icon, label, id, activeTab, onSelect }) => (
-  <button
+  <button type="button"
     onClick={() => onSelect(id)}
     className={`sidebar-item ${activeTab === id ? 'active' : ''}`}
     aria-current={activeTab === id ? 'page' : undefined}
@@ -1173,7 +1173,7 @@ const Dashboard = () => {
       <div className="min-h-screen section-cream flex items-center justify-center">
         <div className="text-center">
           <p className="text-ink-500 mb-4">Please log in to access your dashboard.</p>
-          <button onClick={() => navigate('login')} className="btn-ink py-3 px-8 rounded-full font-semibold">
+          <button type="button" onClick={() => navigate('login')} className="btn-ink py-3 px-8 rounded-full font-semibold">
             Sign In
           </button>
         </div>
@@ -1202,7 +1202,7 @@ const Dashboard = () => {
           <SideItem icon={<Ic.Document />}  label="Resources"   id="resources"    activeTab={tab} onSelect={setTab} />
         </nav>
         <div className="pt-5 border-t border-cream-300 mt-6">
-          <button onClick={logout} className="sidebar-item text-ink-500">
+          <button type="button" onClick={logout} className="sidebar-item text-ink-500">
             <Ic.Logout /> Sign Out
           </button>
         </div>
@@ -1263,7 +1263,7 @@ const Dashboard = () => {
                 <div>
                   <div className="font-semibold text-ink-900 text-sm">Recruitment Roadmap</div>
                   <div className="text-ink-500 text-xs mt-1 leading-relaxed">Next: Finalize target school list</div>
-                  <button className="text-gold-600 text-xs font-semibold mt-2 flex items-center gap-1 hover:text-gold-700">
+                  <button type="button" className="text-gold-600 text-xs font-semibold mt-2 flex items-center gap-1 hover:text-gold-700">
                     View Full <Ic.ChevronRight />
                   </button>
                 </div>
@@ -1287,7 +1287,7 @@ const Dashboard = () => {
                 <p className="text-xs font-medium text-ink-400 uppercase tracking-wider">Next Meeting</p>
                 <p className="font-display text-2xl font-semibold text-ink-900 mt-1">Oct 24</p>
                 <p className="text-xs text-ink-400 flex items-center gap-1 mt-1"><Ic.Clock />4:00 PM EST</p>
-                <button className="text-gold-600 text-xs font-medium hover:underline mt-3 pt-3 border-t border-cream-300 block text-left">
+                <button type="button" className="text-gold-600 text-xs font-medium hover:underline mt-3 pt-3 border-t border-cream-300 block text-left">
                   Reschedule
                 </button>
               </div>
@@ -1312,10 +1312,10 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <div className="flex gap-3">
-                  <button className="flex-1 bg-white text-ink-900 py-2.5 rounded-xl text-xs font-semibold flex justify-center items-center gap-1.5 hover:bg-cream-100 transition-colors">
+                  <button type="button" className="flex-1 bg-white text-ink-900 py-2.5 rounded-xl text-xs font-semibold flex justify-center items-center gap-1.5 hover:bg-cream-100 transition-colors">
                     <Ic.Chat className="w-4 h-4" /> Message
                   </button>
-                  <button className="flex-1 bg-ink-800 text-white py-2.5 rounded-xl text-xs font-semibold border border-ink-700 flex justify-center items-center gap-1.5 hover:bg-ink-700 transition-colors">
+                  <button type="button" className="flex-1 bg-ink-800 text-white py-2.5 rounded-xl text-xs font-semibold border border-ink-700 flex justify-center items-center gap-1.5 hover:bg-ink-700 transition-colors">
                     <Ic.Calendar className="w-4 h-4" /> Schedule
                   </button>
                 </div>
@@ -1329,7 +1329,7 @@ const Dashboard = () => {
                 />
                 <p className="text-gold-400 text-xs font-semibold uppercase tracking-wider mb-2">Action Required</p>
                 <p className="text-white font-semibold mb-5 text-base leading-snug">Review New Assessment Report</p>
-                <button
+                <button type="button"
                   onClick={() => setTab('assessments')}
                   className="btn-gold w-full py-2.5 rounded-xl text-sm font-semibold flex justify-center items-center gap-2"
                 >
@@ -1363,7 +1363,7 @@ const Dashboard = () => {
                 <h2 className="font-display text-4xl font-semibold text-ink-900">Assessments</h2>
                 <p className="text-ink-500 mt-1">Objective baselines and performance tracking.</p>
               </div>
-              <button className="btn-outline-ink text-xs py-2 px-4 rounded-lg flex items-center gap-1.5">
+              <button type="button" className="btn-outline-ink text-xs py-2 px-4 rounded-lg flex items-center gap-1.5">
                 <Ic.Download /> Export PDF
               </button>
             </header>
@@ -1510,7 +1510,7 @@ const Intake = () => {
         <p className="text-ink-500 leading-relaxed mb-8">
           Your intake has been received. We personally review every submission — if we are a fit, you will hear from us within 48 hours to confirm your Foundation Audit session and next steps.
         </p>
-        <button onClick={() => navigate('home')} className="btn-ink py-3 px-8 rounded-full font-semibold">
+        <button type="button" onClick={() => navigate('home')} className="btn-ink py-3 px-8 rounded-full font-semibold">
           Return Home
         </button>
       </AnimSect>
@@ -1660,18 +1660,18 @@ const Intake = () => {
           {/* Navigation */}
           <div className="flex justify-between pt-6 mt-6 border-t border-cream-200">
             {step > 1 ? (
-              <button onClick={() => setStep(step - 1)} className="btn-outline-ink py-2.5 px-6 rounded-xl font-medium text-sm">
+              <button type="button" onClick={() => setStep(step - 1)} className="btn-outline-ink py-2.5 px-6 rounded-xl font-medium text-sm">
                 Back
               </button>
             ) : (
               <div />
             )}
             {step < totalSteps ? (
-              <button onClick={() => setStep(step + 1)} className="btn-ink py-2.5 px-7 rounded-xl font-semibold text-sm flex items-center gap-2">
+              <button type="button" onClick={() => setStep(step + 1)} className="btn-ink py-2.5 px-7 rounded-xl font-semibold text-sm flex items-center gap-2">
                 Continue <Ic.ArrowRight />
               </button>
             ) : (
-              <button onClick={() => setDone(true)} className="btn-gold py-2.5 px-7 rounded-xl font-semibold text-sm">
+              <button type="button" onClick={() => setDone(true)} className="btn-gold py-2.5 px-7 rounded-xl font-semibold text-sm">
                 Submit Intake
               </button>
             )}
@@ -1691,7 +1691,7 @@ const NotFound = () => {
         <div className="font-display text-8xl font-semibold text-gold-400 mb-4" aria-hidden="true">404</div>
         <h1 className="font-display text-3xl font-semibold text-ink-900 mb-4">Page Not Found</h1>
         <p className="text-ink-500 mb-8">The page you are looking for does not exist or has been moved.</p>
-        <button onClick={() => navigate('home')} className="btn-ink py-3 px-8 rounded-full font-semibold">
+        <button type="button" onClick={() => navigate('home')} className="btn-ink py-3 px-8 rounded-full font-semibold">
           Return Home
         </button>
       </div>
