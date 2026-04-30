@@ -44,31 +44,71 @@ const AppProvider = ({ children }) => {
 
 // ── ICONS (inline SVG — single consistent system, Heroicons 2 style) ───────────
 const Ic = {
-  Logo: ({ className = '', ...p }) => {
-    const [err, setErr] = useState(false);
-    if (err) return (
-      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" className={className} aria-hidden="true" {...p}>
-        <path d="M17 2L31 9V25L17 32L3 25V9L17 2Z" fill="url(#logoGrad)"/>
-        <path d="M17 9L23 13V21L17 25L11 21V13L17 9Z" fill="white" fillOpacity=".18"/>
-        <path d="M17 14L19.5 16V19L17 21L14.5 19V16L17 14Z" fill="white"/>
+  /* Civic Sports Consulting brand mark — inline, no external file needed */
+  Logo: ({ className = '', size = 36, ...p }) => {
+    const uid = useRef(`csc-${Math.random().toString(36).slice(2, 9)}`).current;
+    const g  = `url(#${uid}-g)`;
+    const gh = `url(#${uid}-gh)`;
+    return (
+      <svg viewBox="0 0 100 100" width={size} height={size} className={className}
+        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }} {...p}>
         <defs>
-          <linearGradient id="logoGrad" x1="3" y1="2" x2="31" y2="32">
-            <stop stopColor="#c48726"/>
-            <stop offset="1" stopColor="#e0a835"/>
+          <linearGradient id={`${uid}-g`} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#c48726"/><stop offset="50%" stopColor="#e0a835"/><stop offset="100%" stopColor="#ebb853"/>
+          </linearGradient>
+          <linearGradient id={`${uid}-gh`} x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#9d6918"/><stop offset="30%" stopColor="#e0a835"/>
+            <stop offset="60%" stopColor="#f0ca6a"/><stop offset="100%" stopColor="#9d6918"/>
           </linearGradient>
         </defs>
+        {/* Background */}
+        <rect width="100" height="100" rx="6" fill="white"/>
+        {/* Flame */}
+        <path d="M50 7C48.5 10.5 47 15 48 19.5C48.8 22.5 50 24 50 24S51.2 22.5 52 19.5C53 15 51.5 10.5 50 7Z" fill={g}/>
+        <path d="M50 14C49.2 17 49 20.5 50 23S51 20.5 50 14Z" fill="white" fillOpacity="0.25"/>
+        {/* Top entablature bar */}
+        <rect x="26" y="24" width="48" height="4" rx="1" fill={gh}/>
+        {/* Column capitals */}
+        <rect x="25" y="28" width="13" height="3.5" rx="0.5" fill={gh}/>
+        <rect x="39" y="28" width="13" height="3.5" rx="0.5" fill={gh}/>
+        <rect x="48" y="28" width="13" height="3.5" rx="0.5" fill={gh}/>
+        <rect x="62" y="28" width="13" height="3.5" rx="0.5" fill={gh}/>
+        {/* Column shafts — outer pair (taller) */}
+        <rect x="28" y="31.5" width="8" height="41" rx="1" fill="#1a2130"/>
+        <rect x="30.5" y="31.5" width="1.5" height="41" rx="0.5" fill="#374d65" fillOpacity="0.45"/>
+        <rect x="33.5" y="31.5" width="1.5" height="41" rx="0.5" fill="#374d65" fillOpacity="0.45"/>
+        <rect x="64" y="31.5" width="8" height="41" rx="1" fill="#1a2130"/>
+        <rect x="66.5" y="31.5" width="1.5" height="41" rx="0.5" fill="#374d65" fillOpacity="0.45"/>
+        <rect x="69.5" y="31.5" width="1.5" height="41" rx="0.5" fill="#374d65" fillOpacity="0.45"/>
+        {/* Column shafts — inner pair (shorter) */}
+        <rect x="41" y="31.5" width="8" height="34" rx="1" fill="#1a2130"/>
+        <rect x="43.5" y="31.5" width="1.5" height="34" rx="0.5" fill="#374d65" fillOpacity="0.45"/>
+        <rect x="46.5" y="31.5" width="1.5" height="34" rx="0.5" fill="#374d65" fillOpacity="0.45"/>
+        <rect x="51" y="31.5" width="8" height="34" rx="1" fill="#1a2130"/>
+        <rect x="53.5" y="31.5" width="1.5" height="34" rx="0.5" fill="#374d65" fillOpacity="0.45"/>
+        <rect x="56.5" y="31.5" width="1.5" height="34" rx="0.5" fill="#374d65" fillOpacity="0.45"/>
+        {/* Column bases */}
+        <rect x="25" y="72.5" width="13" height="3" rx="0.5" fill={gh}/>
+        <rect x="39" y="65.5" width="13" height="3" rx="0.5" fill={gh}/>
+        <rect x="48" y="65.5" width="13" height="3" rx="0.5" fill={gh}/>
+        <rect x="62" y="72.5" width="13" height="3" rx="0.5" fill={gh}/>
+        {/* W-arch connecting column bases */}
+        <path d="M26 72.5H36L41 65.5H59L64 72.5H74" stroke={gh} strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M41 65.5L50 76.5L59 65.5" stroke={gh} strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+        {/* Bottom platform under outer columns */}
+        <rect x="25" y="75.5" width="13" height="2.5" rx="0.5" fill={gh}/>
+        <rect x="62" y="75.5" width="13" height="2.5" rx="0.5" fill={gh}/>
+        {/* Laurel leaves — left */}
+        <ellipse cx="22" cy="33" rx="6.5" ry="2.5" fill={gh} transform="rotate(-42 22 33)"/>
+        <ellipse cx="17" cy="44" rx="6.5" ry="2.5" fill={gh} transform="rotate(-58 17 44)"/>
+        <ellipse cx="14" cy="57" rx="6.5" ry="2.5" fill={gh} transform="rotate(-72 14 57)"/>
+        <ellipse cx="14" cy="70" rx="6.5" ry="2.5" fill={gh} transform="rotate(-82 14 70)"/>
+        {/* Laurel leaves — right */}
+        <ellipse cx="78" cy="33" rx="6.5" ry="2.5" fill={gh} transform="rotate(42 78 33)"/>
+        <ellipse cx="83" cy="44" rx="6.5" ry="2.5" fill={gh} transform="rotate(58 83 44)"/>
+        <ellipse cx="86" cy="57" rx="6.5" ry="2.5" fill={gh} transform="rotate(72 86 57)"/>
+        <ellipse cx="86" cy="70" rx="6.5" ry="2.5" fill={gh} transform="rotate(82 86 70)"/>
       </svg>
-    );
-    return (
-      <img
-        src="/logo.png"
-        alt="Civic Sports logo"
-        width="36"
-        height="36"
-        className={`w-9 h-9 object-contain bg-white rounded-md ${className}`}
-        onError={() => setErr(true)}
-        {...p}
-      />
     );
   },
   Menu:       ({ className = '', ...p }) => <svg className={`w-6 h-6 ${className}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true" {...p}><path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>,
@@ -104,7 +144,7 @@ const Ic = {
 };
 
 // ── INTERSECTION OBSERVER ANIMATION WRAPPER ────────────────────────────────────
-const AnimSect = ({ children, className = '', delay = 0 }) => {
+const AnimSect = ({ children, className = '', delay = 0, ...rest }) => {
   const ref = useRef(null);
   const [vis, setVis] = useState(false);
 
@@ -123,6 +163,7 @@ const AnimSect = ({ children, className = '', delay = 0 }) => {
       ref={ref}
       className={`${vis ? 'animate-fade-up' : 'opacity-0'} ${className}`}
       style={{ animationDelay: `${delay}ms` }}
+      {...rest}
     >
       {children}
     </div>
@@ -165,10 +206,15 @@ const Navbar = () => {
           onClick={() => navigate('home')}
           aria-label="Civic Sports — Home"
         >
-          <Ic.Logo />
-          <span className={`font-display text-xl font-semibold tracking-wide ${isDark && !scrolled ? 'text-white' : 'text-ink-900'}`}>
-            Civic Sports
-          </span>
+          <Ic.Logo size={40} />
+          <div>
+            <div className={`font-display text-xl font-semibold tracking-wide leading-none ${isDark && !scrolled ? 'text-white' : 'text-ink-900'}`}>
+              Civic Sports
+            </div>
+            <div className={`text-[10px] tracking-widest uppercase font-medium leading-none mt-0.5 ${isDark && !scrolled ? 'text-gold-400' : 'text-gold-700'}`}>
+              Consulting
+            </div>
+          </div>
         </button>
 
         {/* Desktop nav */}
@@ -250,7 +296,7 @@ const Navbar = () => {
                 onClick={() => navigate(l.id)}
                 aria-current={page === l.id ? 'page' : undefined}
                 className={`text-left py-3 px-3 rounded-lg text-base font-medium transition-colors ${
-                  page === l.id ? 'text-gold-600 bg-gold-50' : 'text-ink-700 hover:bg-cream-200'
+                  page === l.id ? 'text-gold-700 bg-gold-50' : 'text-ink-700 hover:bg-cream-200'
                 }`}
               >
                 {l.n}
@@ -292,8 +338,11 @@ const Footer = () => {
           {/* Brand */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-3 mb-5">
-              <Ic.Logo />
-              <span className="font-display text-xl font-semibold text-white">Civic Sports Consulting</span>
+              <Ic.Logo size={44} />
+              <div>
+                <div className="font-display text-lg font-semibold text-white leading-tight">Civic Sports</div>
+                <div className="text-gold-400 text-xs tracking-widest uppercase font-medium">Consulting</div>
+              </div>
             </div>
             <p className="text-ink-400 text-sm leading-relaxed">
               Elite sports consulting for student-athletes and families. NIL strategy, recruitment roadmaps, and compliance-grade guidance — built by a practitioner who has worn the jersey.
@@ -418,16 +467,16 @@ const Home = () => {
         {/* Stats ribbon */}
         <div className="absolute bottom-0 left-0 right-0 border-t border-ink-800/60 bg-ink-900/70 backdrop-blur-sm" aria-label="At a glance">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-ink-800/60">
+            <div className="grid grid-cols-2 md:grid-cols-4">
               {[
                 ['D1 / D2', 'Athlete Focus'],
                 ['NIL', 'Compliance'],
                 ['NCAA', 'Eligibility'],
                 ['48hr', 'Response Time'],
               ].map(([v, l], i) => (
-                <div key={i} className="text-center py-6 px-4">
+                <div key={i} className={`text-center py-6 px-4 ${i < 3 ? 'border-r border-ink-800/60' : ''}`}>
                   <div className="font-display text-3xl font-semibold text-gold-400 mb-1">{v}</div>
-                  <div className="text-ink-500 text-xs tracking-wider uppercase font-medium">{l}</div>
+                  <div className="text-ink-400 text-xs tracking-wider uppercase font-medium">{l}</div>
                 </div>
               ))}
             </div>
@@ -813,6 +862,13 @@ const About = () => {
                 aria-hidden="true"
                 style={{ background: '#e0a835', transform: 'translate(30%,-30%)' }}
               />
+              <div className="flex items-center gap-3 mb-8">
+                <Ic.Logo size={48} />
+                <div>
+                  <div className="font-display text-xl font-semibold text-white leading-tight">Civic Sports</div>
+                  <div className="text-gold-400 text-xs tracking-widest uppercase">Consulting</div>
+                </div>
+              </div>
               <h2 className="font-display text-2xl font-semibold mb-8 text-white">The Civic Standard</h2>
               <ul className="space-y-8">
                 {[
@@ -896,7 +952,7 @@ const FAQ = () => {
 
         <div className="space-y-3" role="list">
           {faqs.map((f, i) => (
-            <AnimSect key={i} delay={i * 60} className={`card overflow-hidden ${open === i ? 'border-gold-300' : ''}`} role="listitem">
+            <AnimSect key={i} delay={i * 60} className={`card overflow-hidden transition-colors ${open === i ? 'border-gold-400 shadow-sm' : ''}`} role="listitem">
               <button type="button"
                 className="w-full flex items-center justify-between p-7 text-left"
                 onClick={() => setOpen(open === i ? -1 : i)}
@@ -928,14 +984,29 @@ const FAQ = () => {
 // ── CONTACT ────────────────────────────────────────────────────────────────────
 const Contact = () => {
   const [status, setStatus] = useState('idle'); // idle | sending | success | error
-  const [form, setForm] = useState({ firstName: '', lastName: '', email: '', message: '' });
+  const [form, setForm]     = useState({ firstName: '', lastName: '', email: '', message: '' });
+  const [errors, setErrors] = useState({});
 
-  const handleChange = (e) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleChange = (e) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    if (errors[e.target.name]) setErrors((prev) => ({ ...prev, [e.target.name]: '' }));
+  };
+
+  const validate = () => {
+    const e = {};
+    if (!form.firstName.trim()) e.firstName = 'First name is required.';
+    if (!form.lastName.trim())  e.lastName  = 'Last name is required.';
+    if (!form.email.trim())     e.email     = 'Email address is required.';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Please enter a valid email.';
+    if (!form.message.trim())   e.message   = 'Message is required.';
+    return e;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const errs = validate();
+    if (Object.keys(errs).length) { setErrors(errs); return; }
     setStatus('sending');
-    // Simulate submission — replace with real API call
     setTimeout(() => setStatus('success'), 1500);
   };
 
@@ -968,7 +1039,7 @@ const Contact = () => {
                     <div>
                       <div className="font-medium text-ink-900 text-sm">{c.label}</div>
                       {c.href ? (
-                        <a href={c.href} className="text-ink-500 text-sm mt-0.5 hover:text-gold-600 transition-colors">
+                        <a href={c.href} className="text-ink-600 text-sm mt-0.5 hover:text-gold-700 transition-colors">
                           {c.val}
                         </a>
                       ) : (
@@ -1001,11 +1072,13 @@ const Contact = () => {
                         id="firstName"
                         name="firstName"
                         className="intake-input"
+                        aria-invalid={errors.firstName ? 'true' : undefined}
+                        aria-describedby={errors.firstName ? 'firstName-err' : undefined}
                         placeholder="Jane"
                         value={form.firstName}
                         onChange={handleChange}
-                        required
                       />
+                      {errors.firstName && <p id="firstName-err" role="alert" className="text-xs text-red-600 mt-1">{errors.firstName}</p>}
                     </div>
                     <div>
                       <label htmlFor="lastName" className="intake-label">Last Name</label>
@@ -1013,11 +1086,13 @@ const Contact = () => {
                         id="lastName"
                         name="lastName"
                         className="intake-input"
+                        aria-invalid={errors.lastName ? 'true' : undefined}
+                        aria-describedby={errors.lastName ? 'lastName-err' : undefined}
                         placeholder="Smith"
                         value={form.lastName}
                         onChange={handleChange}
-                        required
                       />
+                      {errors.lastName && <p id="lastName-err" role="alert" className="text-xs text-red-600 mt-1">{errors.lastName}</p>}
                     </div>
                   </div>
 
@@ -1028,11 +1103,13 @@ const Contact = () => {
                       name="email"
                       type="email"
                       className="intake-input"
+                      aria-invalid={errors.email ? 'true' : undefined}
+                      aria-describedby={errors.email ? 'email-err' : undefined}
                       placeholder="jane@example.com"
                       value={form.email}
                       onChange={handleChange}
-                      required
                     />
+                    {errors.email && <p id="email-err" role="alert" className="text-xs text-red-600 mt-1">{errors.email}</p>}
                   </div>
 
                   <div>
@@ -1042,19 +1119,23 @@ const Contact = () => {
                       name="message"
                       rows={4}
                       className="intake-input resize-none"
+                      aria-invalid={errors.message ? 'true' : undefined}
+                      aria-describedby={errors.message ? 'message-err' : undefined}
                       placeholder="How can we help you?"
                       value={form.message}
                       onChange={handleChange}
-                      required
                     />
+                    {errors.message && <p id="message-err" role="alert" className="text-xs text-red-600 mt-1">{errors.message}</p>}
                   </div>
 
                   <button
                     type="submit"
                     disabled={status === 'sending'}
-                    className="btn-ink w-full py-3.5 rounded-xl font-semibold flex justify-center items-center gap-2"
+                    className="btn-gold w-full py-3.5 rounded-xl font-semibold flex justify-center items-center gap-2 shadow-md"
                   >
-                    {status === 'sending' ? 'Sending...' : (<>Send Message <Ic.Send /></>)}
+                    {status === 'sending'
+                      ? <><span className="inline-block w-4 h-4 border-2 border-ink-900/30 border-t-ink-900 rounded-full animate-spin" aria-hidden="true"/>Sending…</>
+                      : <>Send Message <Ic.Send /></>}
                   </button>
                 </form>
               )}
@@ -1069,12 +1150,14 @@ const Contact = () => {
 // ── LOGIN ──────────────────────────────────────────────────────────────────────
 const Login = () => {
   const { login, navigate } = useApp();
-  const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail]       = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError]       = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!email) { setError('Please enter your email address.'); return; }
+    if (!email)    { setError('Please enter your email address.'); return; }
+    if (!password) { setError('Please enter your password.'); return; }
     setError('');
     login(email);
   };
@@ -1083,8 +1166,8 @@ const Login = () => {
     <div className="min-h-screen section-cream flex items-center justify-center pt-24 pb-20">
       <AnimSect className="w-full max-w-md px-6">
         <div className="text-center mb-8">
-          <div className="inline-block p-3 rounded-2xl bg-ink-900 shadow-xl mb-4" aria-hidden="true">
-            <Ic.Logo />
+          <div className="flex justify-center mb-5">
+            <Ic.Logo size={72} />
           </div>
           <h1 className="font-display text-3xl font-semibold text-ink-900">Client Portal</h1>
           <p className="text-ink-500 mt-2 text-sm">Access your private assessment dashboard.</p>
@@ -1093,7 +1176,7 @@ const Login = () => {
         <div className="card p-8 md:p-10">
           <form onSubmit={handleSubmit} className="space-y-5" noValidate>
             {error && (
-              <div role="alert" className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-3">
+              <div role="alert" className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-4 py-3">
                 {error}
               </div>
             )}
@@ -1118,7 +1201,7 @@ const Login = () => {
             <div>
               <div className="flex justify-between mb-1.5">
                 <label htmlFor="login-password" className="intake-label mb-0">Password</label>
-                <button type="button" className="text-xs text-gold-600 hover:text-gold-700 font-medium">
+                <button type="button" className="text-xs text-gold-700 hover:text-gold-600 font-medium">
                   Forgot password?
                 </button>
               </div>
@@ -1128,6 +1211,8 @@ const Login = () => {
                   id="login-password"
                   type="password"
                   required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="intake-input pl-10"
                   placeholder="Enter your password"
                   autoComplete="current-password"
@@ -1143,7 +1228,7 @@ const Login = () => {
 
         <p className="text-center text-sm text-ink-500 mt-6">
           Not a member yet?{' '}
-          <button type="button" onClick={() => navigate('intake')} className="text-gold-600 font-medium hover:underline">
+          <button type="button" onClick={() => navigate('intake')} className="text-gold-700 font-medium hover:text-gold-600 hover:underline">
             Start an intake
           </button>
         </p>
@@ -1187,13 +1272,22 @@ const Dashboard = () => {
   const offset = circ - (progressPct / 100) * circ;
 
   return (
-    <div className="min-h-screen section-cream flex flex-col md:flex-row" style={{ paddingTop: '72px' }}>
+    <div className="min-h-screen section-cream flex flex-col md:flex-row" style={{ paddingTop: '80px' }}>
       {/* Desktop sidebar */}
       <aside className="w-full md:w-64 bg-white border-r border-cream-300 md:min-h-screen p-6 flex-col hidden md:flex" aria-label="Dashboard navigation">
         <div className="mb-8 px-2">
-          <p className="text-xs font-semibold text-ink-400 uppercase tracking-widest mb-1">Client Portal</p>
-          <h1 className="font-display text-xl font-semibold text-ink-900">{user.name}</h1>
-          <p className="text-xs text-ink-400 mt-0.5">{user.sport} &middot; {user.athleteName}</p>
+          <div className="flex items-center gap-2.5 mb-4">
+            <Ic.Logo size={40} />
+            <div>
+              <p className="text-xs font-bold text-ink-900 tracking-wider uppercase leading-none">Civic Sports</p>
+              <p className="text-[10px] text-ink-400 tracking-widest uppercase mt-0.5">Consulting</p>
+            </div>
+          </div>
+          <div className="border-t border-cream-300 pt-4">
+            <p className="text-xs font-semibold text-ink-400 uppercase tracking-widest mb-1">Client Portal</p>
+            <h2 className="font-display text-xl font-semibold text-ink-900">{user.name}</h2>
+            <p className="text-xs text-ink-400 mt-0.5">{user.sport} &middot; {user.athleteName}</p>
+          </div>
         </div>
         <nav className="space-y-1 flex-1" aria-label="Portal sections">
           <SideItem icon={<Ic.Dashboard />} label="Overview"    id="overview"     activeTab={tab} onSelect={setTab} />
@@ -1209,10 +1303,13 @@ const Dashboard = () => {
       </aside>
 
       {/* Mobile tab bar */}
-      <div className="md:hidden bg-white border-b border-cream-300 p-4 flex justify-between items-center sticky top-16 z-30">
-        <div>
-          <p className="text-xs text-ink-400">Client Portal</p>
-          <p className="font-semibold text-ink-900 text-sm">{user.name}</p>
+      <div className="md:hidden bg-white border-b border-cream-300 p-4 flex justify-between items-center sticky top-20 z-30">
+        <div className="flex items-center gap-2.5">
+          <Ic.Logo size={32} />
+          <div>
+            <p className="text-xs text-ink-400 leading-none">Client Portal</p>
+            <p className="font-semibold text-ink-900 text-sm mt-0.5">{user.name}</p>
+          </div>
         </div>
         <label htmlFor="mobile-tab-select" className="sr-only">Portal section</label>
         <select
@@ -1263,7 +1360,7 @@ const Dashboard = () => {
                 <div>
                   <div className="font-semibold text-ink-900 text-sm">Recruitment Roadmap</div>
                   <div className="text-ink-500 text-xs mt-1 leading-relaxed">Next: Finalize target school list</div>
-                  <button type="button" className="text-gold-600 text-xs font-semibold mt-2 flex items-center gap-1 hover:text-gold-700">
+                  <button type="button" className="text-gold-700 text-xs font-semibold mt-2 flex items-center gap-1 hover:text-gold-600">
                     View Full <Ic.ChevronRight />
                   </button>
                 </div>
@@ -1287,7 +1384,7 @@ const Dashboard = () => {
                 <p className="text-xs font-medium text-ink-400 uppercase tracking-wider">Next Meeting</p>
                 <p className="font-display text-2xl font-semibold text-ink-900 mt-1">Oct 24</p>
                 <p className="text-xs text-ink-400 flex items-center gap-1 mt-1"><Ic.Clock />4:00 PM EST</p>
-                <button type="button" className="text-gold-600 text-xs font-medium hover:underline mt-3 pt-3 border-t border-cream-300 block text-left">
+                <button type="button" className="text-gold-700 text-xs font-medium hover:text-gold-600 hover:underline mt-3 pt-3 border-t border-cream-300 block text-left">
                   Reschedule
                 </button>
               </div>
@@ -1303,8 +1400,8 @@ const Dashboard = () => {
                 />
                 <p className="text-ink-400 text-xs font-medium uppercase tracking-wider mb-5">Your Lead Advisor</p>
                 <div className="flex items-center gap-4 mb-5">
-                  <div className="w-12 h-12 rounded-full bg-ink-800 border-2 border-gold-500 flex items-center justify-center text-gold-400 font-display text-lg font-semibold" aria-hidden="true">
-                    CS
+                  <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shrink-0" aria-hidden="true">
+                    <Ic.Logo size={40} />
                   </div>
                   <div>
                     <div className="font-semibold text-white">Civic Sports Advisor</div>
@@ -1495,16 +1592,25 @@ const Dashboard = () => {
 // ── INTAKE ─────────────────────────────────────────────────────────────────────
 const Intake = () => {
   const { navigate } = useApp();
-  const [step, setStep] = useState(1);
-  const [done, setDone] = useState(false);
-  const totalSteps = 3;
-  const stepLabels = ['Contact Info', 'Athlete Details', 'Goals & Challenges'];
+  const [step, setStep]       = useState(1);
+  const [done, setDone]       = useState(false);
+  const [sending, setSending] = useState(false);
+  const totalSteps  = 3;
+  const stepLabels  = ['Contact Info', 'Athlete Details', 'Goals & Challenges'];
+
+  const handleSubmit = () => {
+    setSending(true);
+    setTimeout(() => { setSending(false); setDone(true); }, 1200);
+  };
 
   if (done) return (
     <div className="min-h-screen section-cream flex items-center justify-center pt-24 pb-20">
       <AnimSect className="max-w-md w-full mx-auto px-6 text-center">
-        <div className="w-20 h-20 rounded-full bg-sage-100 border border-sage-200 text-sage-600 flex items-center justify-center mx-auto mb-7" aria-hidden="true">
-          <Ic.CheckCircle className="w-9 h-9" />
+        <div className="flex justify-center mb-6">
+          <Ic.Logo size={64} />
+        </div>
+        <div className="w-16 h-16 rounded-full bg-sage-100 border border-sage-200 text-sage-600 flex items-center justify-center mx-auto mb-7" aria-hidden="true">
+          <Ic.CheckCircle className="w-8 h-8" />
         </div>
         <h1 className="font-display text-4xl font-semibold text-ink-900 mb-4">You&rsquo;re In the Queue.</h1>
         <p className="text-ink-500 leading-relaxed mb-8">
@@ -1532,7 +1638,7 @@ const Intake = () => {
         <div className="mb-8" aria-label={`Step ${step} of ${totalSteps}: ${stepLabels[step - 1]}`}>
           <div className="flex justify-between text-xs font-semibold mb-2">
             {stepLabels.map((l, i) => (
-              <span key={i} className={step > i ? 'text-gold-600' : step === i + 1 ? 'text-ink-700' : 'text-ink-300'}>
+              <span key={i} className={step > i ? 'text-gold-700' : step === i + 1 ? 'text-ink-800' : 'text-ink-400'}>
                 {l}
               </span>
             ))}
@@ -1642,7 +1748,7 @@ const Intake = () => {
               </div>
 
               <div className="flex items-center gap-3 p-4 bg-gold-50 border border-gold-200 rounded-xl">
-                <input type="checkbox" id="newsletter" className="w-4 h-4 accent-gold-600" />
+                <input type="checkbox" id="newsletter" className="w-4 h-4 accent-[#a06c1a]" />
                 <label htmlFor="newsletter" className="text-sm text-ink-700 cursor-pointer">
                   Join the <span className="font-semibold text-gold-700">Inner Circle</span> — NIL &amp; eligibility updates, recruiting intel, and strategy drops. No spam, unsubscribe anytime.
                 </label>
@@ -1671,8 +1777,10 @@ const Intake = () => {
                 Continue <Ic.ArrowRight />
               </button>
             ) : (
-              <button type="button" onClick={() => setDone(true)} className="btn-gold py-2.5 px-7 rounded-xl font-semibold text-sm">
-                Submit Intake
+              <button type="button" onClick={handleSubmit} disabled={sending} className="btn-gold py-2.5 px-7 rounded-xl font-semibold text-sm flex items-center gap-2">
+                {sending
+                  ? <><span className="inline-block w-3.5 h-3.5 border-2 border-ink-900/30 border-t-ink-900 rounded-full animate-spin" aria-hidden="true"/>Submitting…</>
+                  : 'Submit Intake'}
               </button>
             )}
           </div>
