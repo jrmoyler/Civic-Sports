@@ -159,19 +159,17 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
-        <div
+        <button
+          type="button"
           className="flex items-center gap-3 cursor-pointer group"
           onClick={() => navigate('home')}
-          role="link"
-          tabIndex={0}
           aria-label="Civic Sports — Home"
-          onKeyDown={(e) => e.key === 'Enter' && navigate('home')}
         >
           <Ic.Logo />
           <span className={`font-display text-xl font-semibold tracking-wide ${isDark && !scrolled ? 'text-white' : 'text-ink-900'}`}>
             Civic Sports
           </span>
-        </div>
+        </button>
 
         {/* Desktop nav */}
         <nav aria-label="Main navigation" className="hidden md:flex items-center gap-7">

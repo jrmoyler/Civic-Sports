@@ -92,3 +92,8 @@ This is a static SPA. Deploy the `dist/` folder (after `npm run build`) to any s
 For client-side routing to work on Netlify/Vercel, add a redirect rule:
 - Netlify: add `public/_redirects` with `/* /index.html 200`
 - Vercel: add `vercel.json` with rewrites rule
+
+## Repository Hygiene Notes
+
+- Removed obsolete scratch files from the repo root that duplicated CSS/config/app code and were not part of the Vite build.
+- Active source of truth is `src/` + `public/` + standard config files.
