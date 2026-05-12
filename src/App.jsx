@@ -29,6 +29,19 @@ const AppProvider = ({ children }) => {
     navigate('dashboard');
   }, [navigate]);
 
+  const register = useCallback((intakeData) => {
+    setAuth(true);
+    setUser({
+      name: intakeData.parentName,
+      email: intakeData.parentEmail,
+      memberSince: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+      athleteName: intakeData.athleteName,
+      sport: intakeData.primarySport,
+      phase: 'Intake Received',
+    });
+    navigate('dashboard');
+  }, [navigate]);
+
   const logout = useCallback(() => {
     setAuth(false);
     setUser(null);
@@ -36,7 +49,7 @@ const AppProvider = ({ children }) => {
   }, [navigate]);
 
   return (
-    <Ctx.Provider value={{ page, navigate, auth, login, logout, mobileMenu, setMobileMenu, user }}>
+    <Ctx.Provider value={{ page, navigate, auth, login, logout, register, mobileMenu, setMobileMenu, user }}>
       {children}
     </Ctx.Provider>
   );
@@ -1591,37 +1604,29 @@ const Dashboard = () => {
 
 // ── INTAKE ─────────────────────────────────────────────────────────────────────
 const Intake = () => {
-  const { navigate } = useApp();
+  const { navigate, register } = useApp();
   const [step, setStep]       = useState(1);
-  const [done, setDone]       = useState(false);
   const [sending, setSending] = useState(false);
+  const [form, setForm]       = useState({
+    parentName: '', parentEmail: '', parentPhone: '', contactPref: 'Email',
+    athleteName: '', athleteAge: '', primarySport: '', currentLevel: '', filmLink: '',
+    primaryReason: '', topGoals: '', newsletter: false,
+  });
   const totalSteps  = 3;
   const stepLabels  = ['Contact Info', 'Athlete Details', 'Goals & Challenges'];
 
-  const handleSubmit = () => {
-    setSending(true);
-    setTimeout(() => { setSending(false); setDone(true); }, 1200);
+  const handleChange = (e) => {
+    const { id, value, type, checked } = e.target;
+    setForm(prev => ({ ...prev, [id]: type === 'checkbox' ? checked : value }));
   };
 
-  if (done) return (
-    <div className="min-h-screen section-cream flex items-center justify-center pt-24 pb-20">
-      <AnimSect className="max-w-md w-full mx-auto px-6 text-center">
-        <div className="flex justify-center mb-6">
-          <Ic.Logo size={64} />
-        </div>
-        <div className="w-16 h-16 rounded-full bg-sage-100 border border-sage-200 text-sage-600 flex items-center justify-center mx-auto mb-7" aria-hidden="true">
-          <Ic.CheckCircle className="w-8 h-8" />
-        </div>
-        <h1 className="font-display text-4xl font-semibold text-ink-900 mb-4">You&rsquo;re In the Queue.</h1>
-        <p className="text-ink-500 leading-relaxed mb-8">
-          Your intake has been received. We personally review every submission — if we are a fit, you will hear from us within 48 hours to confirm your Foundation Audit session and next steps.
-        </p>
-        <button type="button" onClick={() => navigate('home')} className="btn-ink py-3 px-8 rounded-full font-semibold">
-          Return Home
-        </button>
-      </AnimSect>
-    </div>
-  );
+  const handleSubmit = () => {
+    setSending(true);
+    setTimeout(() => {
+      setSending(false);
+      register(form);
+    }, 1200);
+  };
 
   return (
     <div className="min-h-screen section-cream pt-28 pb-24">
@@ -1661,19 +1666,19 @@ const Intake = () => {
               <div className="grid md:grid-cols-2 gap-5">
                 <div>
                   <label htmlFor="parentName" className="intake-label">Parent Name <span aria-hidden="true">*</span></label>
-                  <input id="parentName" className="intake-input" placeholder="Jane Smith" required />
+                  <input id="parentName" className="intake-input" placeholder="Jane Smith" required value={form.parentName} onChange={handleChange} />
                 </div>
                 <div>
                   <label htmlFor="parentEmail" className="intake-label">Email Address <span aria-hidden="true">*</span></label>
-                  <input id="parentEmail" type="email" className="intake-input" placeholder="jane@example.com" required />
+                  <input id="parentEmail" type="email" className="intake-input" placeholder="jane@example.com" required value={form.parentEmail} onChange={handleChange} />
                 </div>
                 <div>
                   <label htmlFor="parentPhone" className="intake-label">Phone Number</label>
-                  <input id="parentPhone" type="tel" className="intake-input" placeholder="(555) 000-0000" />
+                  <input id="parentPhone" type="tel" className="intake-input" placeholder="(555) 000-0000" value={form.parentPhone} onChange={handleChange} />
                 </div>
                 <div>
                   <label htmlFor="contactPref" className="intake-label">Preferred Contact</label>
-                  <select id="contactPref" className="intake-input">
+                  <select id="contactPref" className="intake-input" value={form.contactPref} onChange={handleChange}>
                     <option>Email</option>
                     <option>Phone Call</option>
                     <option>Text Message</option>
@@ -1692,15 +1697,15 @@ const Intake = () => {
               <div className="grid md:grid-cols-2 gap-5">
                 <div>
                   <label htmlFor="athleteName" className="intake-label">Athlete Name <span aria-hidden="true">*</span></label>
-                  <input id="athleteName" className="intake-input" placeholder="Marcus Smith" required />
+                  <input id="athleteName" className="intake-input" placeholder="Marcus Smith" required value={form.athleteName} onChange={handleChange} />
                 </div>
                 <div>
                   <label htmlFor="athleteAge" className="intake-label">Age / Grade <span aria-hidden="true">*</span></label>
-                  <input id="athleteAge" className="intake-input" placeholder="16 / 11th Grade" required />
+                  <input id="athleteAge" className="intake-input" placeholder="16 / 11th Grade" required value={form.athleteAge} onChange={handleChange} />
                 </div>
                 <div>
                   <label htmlFor="primarySport" className="intake-label">Primary Sport <span aria-hidden="true">*</span></label>
-                  <select id="primarySport" className="intake-input" required>
+                  <select id="primarySport" className="intake-input" required value={form.primarySport} onChange={handleChange}>
                     <option value="">Select sport...</option>
                     {['Basketball', 'Football', 'Soccer', 'Baseball', 'Softball', 'Volleyball', 'Track & Field', 'Swimming', 'Tennis', 'Golf', 'Lacrosse', 'Wrestling', 'Other'].map((s) => (
                       <option key={s}>{s}</option>
@@ -1709,11 +1714,11 @@ const Intake = () => {
                 </div>
                 <div>
                   <label htmlFor="currentLevel" className="intake-label">Current Level</label>
-                  <input id="currentLevel" className="intake-input" placeholder="e.g. Club, JV, Varsity, D1, D2" />
+                  <input id="currentLevel" className="intake-input" placeholder="e.g. Club, JV, Varsity, D1, D2" value={form.currentLevel} onChange={handleChange} />
                 </div>
                 <div className="md:col-span-2">
                   <label htmlFor="filmLink" className="intake-label">Highlights / Film Link (Optional)</label>
-                  <input id="filmLink" type="url" className="intake-input" placeholder="Hudl, YouTube, etc." />
+                  <input id="filmLink" type="url" className="intake-input" placeholder="Hudl, YouTube, etc." value={form.filmLink} onChange={handleChange} />
                 </div>
               </div>
             </fieldset>
@@ -1735,6 +1740,8 @@ const Intake = () => {
                   className="intake-input resize-none"
                   placeholder="Be as specific as possible — recruiting timeline, NIL opportunity, eligibility concern, transfer portal, etc."
                   required
+                  value={form.primaryReason}
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -1744,11 +1751,13 @@ const Intake = () => {
                   rows={3}
                   className="intake-input resize-none"
                   placeholder="e.g. Earn D1 offer, secure first NIL deal, navigate transfer portal..."
+                  value={form.topGoals}
+                  onChange={handleChange}
                 />
               </div>
 
               <div className="flex items-center gap-3 p-4 bg-gold-50 border border-gold-200 rounded-xl">
-                <input type="checkbox" id="newsletter" className="w-4 h-4 accent-[#a06c1a]" />
+                <input type="checkbox" id="newsletter" className="w-4 h-4 accent-[#a06c1a]" checked={form.newsletter} onChange={handleChange} />
                 <label htmlFor="newsletter" className="text-sm text-ink-700 cursor-pointer">
                   Join the <span className="font-semibold text-gold-700">Inner Circle</span> — NIL &amp; eligibility updates, recruiting intel, and strategy drops. No spam, unsubscribe anytime.
                 </label>
